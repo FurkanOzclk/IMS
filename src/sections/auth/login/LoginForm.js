@@ -25,7 +25,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mailext, setMailExt] = useState('')
+  const [mailext, setMailExt] = useState('@gidatarim.edu.tr')
 
   const changeEmail = event => {
     setEmail(event.target.value)
@@ -62,11 +62,11 @@ export default function LoginForm() {
 
   const onSubmit = async () => {
     try {
-      const formDAta = {
-        "email": email,
+      const formData = {
+        "email": `${email+mailext}`,
         "password": password
       }
-      const { data } = await axiosInstance.post('/user/login', formDAta)
+      const { data } = await axiosInstance.post('/user/login', formData)
       localStorage.setItem("access_token", data.token);
       localStorage.setItem("fullname", data.fullname);
       localStorage.setItem("role", data.role);
@@ -98,7 +98,7 @@ export default function LoginForm() {
       <Stack spacing={3}>
         <Stack direction="row" justifyContent="space-evenly">
 
-          <RHFTextField name="email" label="Email address" onChange={changeEmail} value={email} />
+          <RHFTextField name="email" label="User Name" onChange={changeEmail} value={email} placeholder="Name.Surname" />
           <Stack>
 
             <Select
@@ -114,7 +114,7 @@ export default function LoginForm() {
             </Select>
           </Stack>
         </Stack>
-        <FormHelperText>Students have to select "@ogr."</FormHelperText>
+        <FormHelperText>Students have to select "@ogr.gidatarim.edu.tr."</FormHelperText>
 
         <RHFTextField
           name="password"
