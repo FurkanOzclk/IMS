@@ -140,7 +140,7 @@ const TeamAdminView = () => {
     };
 
     const addReport = async () => {
-        alert("Report Added")
+        // alert("Report Added")
     }
 
     const [page, setPage] = useState(0);
@@ -318,8 +318,9 @@ const TeamAdminView = () => {
                 <Card sx={{ top: +10, }}>
                     <Stack direction="row" alignItems="baseline" justifyContent="space-between">
                         <CardHeader title="Reports" />
-                        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={addReport} sx={{ mr: 2 }} >
+                        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} sx={{ mr: 2 }} component="label">
                             New Report
+                            <input hidden accept="pdf/*" multiple type="file" />
                         </Button>
                     </Stack>
                     <CardContent>

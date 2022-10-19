@@ -108,13 +108,14 @@ export default function LoginForm() {
               label="Age"
               onChange={mailExtChange}
             >
+              <MenuItem value={""}>-</MenuItem>
               <MenuItem value={"@gidatarim.edu.tr"}>@gidatarim.edu.tr</MenuItem>
               <MenuItem value={"@ogr.gidatarim.edu.tr"}>@ogr.gidatarim.edu.tr</MenuItem>
 
             </Select>
           </Stack>
         </Stack>
-        <FormHelperText>Students have to select "@ogr.gidatarim.edu.tr."</FormHelperText>
+        <FormHelperText>* Students have to select "@ogr.gidatarim.edu.tr."</FormHelperText>
 
         <RHFTextField
           name="password"
