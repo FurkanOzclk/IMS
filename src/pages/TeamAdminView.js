@@ -23,8 +23,12 @@ import {
     Box,
 } from '@mui/material';
 // components
+import S3FileUpload from 'react-s3';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+// import {Buffer} from 'buffer';
+import * as buffer from "buffer"
 
 import { Person2, Groups, Folder, Construction, Circle, ExpandMore } from '@mui/icons-material/';
 import Page from '../components/Page';
@@ -34,12 +38,20 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 import TeamAdminMoreMenu from '../sections/@dashboard/teamadmin/TeamAdminMoreMenu';
 
-
 import { axiosInstance } from "../axios/Axios";
 import Login from './Login';
+
 // mock
 
+// Buffer.from('anything','base64');
+window.Buffer = buffer.Buffer;
 
+const config = {
+    bucketName: 'kgtuprojects', 
+    region: 'eu-east-1',
+    accessKeyId: 'AKIAZFOEP2CNIVI6G47N' ,
+    secretAccessKey: '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',
+}
 
 
 const TABLE_HEAD = [
@@ -139,8 +151,11 @@ const TeamAdminView = () => {
         navigate('/team/teamadmin/setteammember');
     };
 
-    const addReport = async () => {
-        // alert("Report Added")
+    const addReport = async (e) => {
+        console.log(e.target.files[0]);
+        S3FileUpload.uploadFile(e.target.files[0], config)
+        .then(data=> console.log(data.location))
+        .catch(err => console.log(err))
     }
 
     const [page, setPage] = useState(0);
@@ -318,7 +333,7 @@ const TeamAdminView = () => {
                 <Card sx={{ top: +10, }}>
                     <Stack direction="row" alignItems="baseline" justifyContent="space-between">
                         <CardHeader title="Reports" />
-                        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} sx={{ mr: 2 }} component="label">
+                        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} sx={{ mr: 2 }} component="label" onClick={addReport}>
                             New Report
                             <input hidden accept="pdf/*" multiple type="file" />
                         </Button>

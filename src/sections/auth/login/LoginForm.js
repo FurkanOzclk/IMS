@@ -39,6 +39,10 @@ export default function LoginForm() {
     setMailExt(event.target.value);
   };
 
+  const navigatePassword = () => {
+    navigate('/password');
+  }
+
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -63,7 +67,7 @@ export default function LoginForm() {
   const onSubmit = async () => {
     try {
       const formData = {
-        "email": `${email+mailext}`,
+        "email": `${email + mailext}`,
         "password": password
       }
       const { data } = await axiosInstance.post('/user/login', formData)
@@ -135,9 +139,10 @@ export default function LoginForm() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <RHFCheckbox name="remember" label="Remember me" />
-
+      <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 2 }}>
+        <Link variant="subtitle2" underline="hover" onClick={navigatePassword} >
+          Forgot password?
+        </Link>
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ bgcolor: "#983838" }}>
