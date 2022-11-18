@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, url } from 'react';
 import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
@@ -133,14 +133,14 @@ export default function LoginForm() {
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                   <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
-              </InputAdornment>
+              </InputAdornment> 
             ),
           }}
         />
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 2 }}>
-        <Link variant="subtitle2" underline="hover" onClick={navigatePassword} >
+        <Link variant="subtitle2" underline="hover" onClick={navigatePassword} sx={{cursor:"pointer"}}>
           Forgot password?
         </Link>
       </Stack>

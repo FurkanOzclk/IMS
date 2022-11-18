@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { eq, filter, size } from 'lodash';
+import { eq, filter, forEach, method, size } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 // material
 import {
@@ -21,37 +21,33 @@ import {
     ListItemIcon,
     Divider,
     Box,
+    Link,
 } from '@mui/material';
 // components
-import S3FileUpload from 'react-s3';
+import S3FileUpload, { uploadFile } from 'react-s3';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 // import {Buffer} from 'buffer';
 import * as buffer from "buffer"
 
-import { Person2, Groups, Folder, Construction, Circle, ExpandMore } from '@mui/icons-material/';
+import { Person2, Groups, Folder, Construction, Circle, ExpandMore, FileCopy } from '@mui/icons-material/';
+import axios, { post } from 'axios';
+import { axiosInstance } from "../axios/Axios";
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 import TeamAdminMoreMenu from '../sections/@dashboard/teamadmin/TeamAdminMoreMenu';
+import ReportMoreMenu from '../sections/@dashboard/report/ReportMoreMenu';
 
-import { axiosInstance } from "../axios/Axios";
 import Login from './Login';
 
 // mock
 
 // Buffer.from('anything','base64');
 window.Buffer = buffer.Buffer;
-
-const config = {
-    bucketName: 'kgtuprojects', 
-    region: 'eu-east-1',
-    accessKeyId: 'AKIAZFOEP2CNIVI6G47N' ,
-    secretAccessKey: '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',
-}
 
 
 const TABLE_HEAD = [
@@ -107,19 +103,25 @@ const TeamAdminView = () => {
     const [project, setProject] = useState([]);
     const [equipment, setEquipment] = useState([]);
     const [equipmentType, setEquipmentType] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [state, setState] = useState({ file: null })
+    const [report, setReport] = useState([])
+    const [click, setClick] = useState(false)
+
+
 
     const forceUpdate = useForceUpdate();
 
     async function getData() {
         try {
             const { data } = await axiosInstance.get('/teamadmin/')
-            console.log(data);
             setData(data)
             setTeam(data.team)
             setMembers(data.members);
             setProject(data.team.project)
             setEquipment(data.equipments)
             setEquipmentType(data.equipmenttypes)
+            setReport(data.team.project.reports)
 
         } catch (error) {
             toast.error("Get Data Failed");
@@ -151,12 +153,6 @@ const TeamAdminView = () => {
         navigate('/team/teamadmin/setteammember');
     };
 
-    const addReport = async (e) => {
-        console.log(e.target.files[0]);
-        S3FileUpload.uploadFile(e.target.files[0], config)
-        .then(data=> console.log(data.location))
-        .catch(err => console.log(err))
-    }
 
     const [page, setPage] = useState(0);
 
@@ -227,8 +223,37 @@ const TeamAdminView = () => {
         func: getData
     }
 
+    const accessToken = localStorage.getItem("access_token");
+    const urlLocal = "http://localhost:8000/api/project/report/"
 
+    
+    const handleFile = (e) => {
+        const file = e.target.files[0]
+        setState(file)
+        
+    }
 
+    const handleUpload = (e) => {
+        const file = state
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("id", project._id);
+        setClick(true)
+        axios({
+            url: urlLocal,
+            method: "POST",
+            headers: {
+                authorization: `Bearer ${accessToken}`,
+                'content-type': 'multipart/form-data'
+            },
+            data: formData
+        }).then((res) => {
+            console.log(res.data.msg);
+            window.location.reload();
+        })
+
+        
+    }
     return (
         <Page title="Team Admin">
             <ToastContainer />
@@ -264,20 +289,20 @@ const TeamAdminView = () => {
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
-                                />
+                                    />
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                         const { _id, email, fullname, role, user } = row;
                                         const isItemSelected = selected.indexOf(fullname) !== -1;
-
+                                        
                                         return (
                                             <TableRow
-                                                hover
-                                                key={_id}
-                                                tabIndex={-1}
-                                                role="checkbox"
-                                                selected={isItemSelected}
-                                                aria-checked={isItemSelected}
+                                            hover
+                                            key={_id}
+                                            tabIndex={-1}
+                                            role="checkbox"
+                                            selected={isItemSelected}
+                                            aria-checked={isItemSelected}
                                             >
 
                                                 <TableCell component="th" scope="row" >
@@ -326,20 +351,26 @@ const TeamAdminView = () => {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
+                        />
                 </Card>
             </Container>
             <Container maxWidth="lg" sx={{ mt: 2 }} >
                 <Card sx={{ top: +10, }}>
-                    <Stack direction="row" alignItems="baseline" justifyContent="space-between">
+                    <Stack direction="row" alignItems="baseline" justifyContent="space-between" mr={2}>
                         <CardHeader title="Reports" />
-                        <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} sx={{ mr: 2 }} component="label" onClick={addReport}>
-                            New Report
-                            <input hidden accept="pdf/*" multiple type="file" />
+                        <Button variant="contained">
+                            <input type="file" name='file' accept='application/pdf' onChange={(e) => handleFile(e)} />
+                        </Button>
+                        <Button variant="contained" onClick={(e) => handleUpload(e)} disabled={click}>
+                            Upload
                         </Button>
                     </Stack>
                     <CardContent>
-                        <Typography>Selam</Typography>
+                        {report.map(r => {
+                            return (
+                                <Cardinfo2 link={r.name} icon={<FileCopy />} href={r.location} reportId={project._id} repLocation={r.location} />
+                                )
+                            })}
                     </CardContent>
                 </Card>
             </Container>
@@ -360,14 +391,12 @@ const TeamAdminView = () => {
                         )}
                     </CardContent>
                 </Card>
-
-
-
             </Container>
         </Page>
 
-    )
+)
 
+    
 }
 
 
@@ -378,10 +407,28 @@ const Cardinfo = ({ icon, text }) => {
                 {icon}
             </ListItemIcon>
             <ListItemText primary={text} />
+
         </ListItem>
     )
 }
 
+const Cardinfo2 = ({ icon, link, href, reportId, repLocation, updateGetData }) => {
+    return (
+        <ListItem>
+            <ListItemIcon>
+                {icon}
+            </ListItemIcon>
+            <Link href={href} underline="hover">
+                {link}
+            </Link>
+            <ListItem sx={{ justifyContent: 'flex-end' }}>
+                <ReportMoreMenu id={reportId} location={repLocation}  funcs={updateGetData}/>
+            </ListItem>
+
+        </ListItem>
+    )
+    
+}
 
 
 export default TeamAdminView;

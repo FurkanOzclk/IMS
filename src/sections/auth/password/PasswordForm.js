@@ -43,10 +43,12 @@ export default function LoginForm() {
   // });
 
 const confirmPasswordF = () => {
-  if (password !== confimPassword) {
-    alert("Please confirm your password")
+  if (password === '') {
+    toast.error("Please enter your password")
+  } else if (password !== confimPassword || confimPassword === '') {
+    toast.error("Please confirm your password")
   } else {
-    alert("Password created successfully")
+    toast.success("Password created successfully")
   }
 } 
 

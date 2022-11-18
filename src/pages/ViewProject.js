@@ -1,7 +1,7 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { Container, Box, ListItemText, Card, ListItemIcon, CardContent, ListItem, CardHeader, Divider } from '@mui/material';
-import { InsertDriveFile, Timer, TimerOff, Person } from '@mui/icons-material/';
+import { Container, Box, ListItemText, Card, ListItemIcon, CardContent, ListItem, CardHeader, Divider, Link } from '@mui/material';
+import { InsertDriveFile, Timer, TimerOff, Person, FileCopy } from '@mui/icons-material/';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { axiosInstance } from "../axios/Axios";
@@ -22,14 +22,19 @@ const ViewProject = () => {
     const [project, setProject] = useState({});
     const [team, setTeam] = useState([{ "name": "" }]);
     const [members, setMembers] = useState([{ "user": { "fullname": "" } }]);
+    const [report, setReport] = useState([])
+
 
     async function getData() {
         try {
             const { data } = await axiosInstance.get(`/project/${id}`);
             setData(data);
+            console.log(data);
             setProject(data.project);
             setTeam(data.teams);
             setMembers(data.members)
+            setReport(data.project.reports)
+            
         } catch (error) {
             toast.error("Get Data Failed");
             console.log(error);
@@ -50,7 +55,7 @@ const ViewProject = () => {
                     sx={{ top: +30, width: 1, }}
                 >
                     <CardHeader
-                        sx={{ mb: 3}}
+                        sx={{ mb: 3 }}
                         title="Team Data Deleted"
                     />
 
@@ -58,7 +63,6 @@ const ViewProject = () => {
             );
         }
         if (team.length !== 0) {
-            console.log(team);
             const teamtitle = `${team[0].name}`;
             return (
                 <Card
@@ -77,6 +81,44 @@ const ViewProject = () => {
                             const info = `${member.user.fullname} -${member.user.role}    `;
                             return (
                                 <Cardinfo text={info} icon={<Person />} />
+                            )
+                        }
+
+                        )}
+                    </CardContent>
+                </Card>
+            )
+        }
+    }
+
+    const ReportReturner = () => {
+        if (report.length === 0) {
+            return (
+                <Card
+                    sx={{ top: +60, width: 1, }}
+                >
+                    <CardHeader
+                        sx={{ mb: 3 }}
+                        title="Report Data Deleted"
+                    />
+
+                </Card>
+            );
+        }
+        if (report.length !== 0) {
+            return (
+                <Card
+                    sx={{ top: +60, width: 1, }}
+                >
+                    <CardHeader
+                        title="Reports"
+                    />
+                    <CardContent>
+
+                        {report.map(r => {
+                            const info = `${r.name}`;
+                            return (
+                                <Cardinfo2   link={info} icon={<FileCopy />} href={r.location} />
                             )
                         }
 
@@ -112,6 +154,7 @@ const ViewProject = () => {
                     </Card>
 
                     <TeamReturner />
+                    <ReportReturner />
                 </Container>
             </Box>
         </Page >
@@ -123,6 +166,20 @@ const Cardinfo = ({ icon, text }) => {
             <ListItemIcon>
                 {icon}
             </ListItemIcon>
+            <ListItemText primary={text} />
+        </ListItem>
+    )
+}
+
+const Cardinfo2 = ({ icon, text, link, href }) => {
+    return (
+        <ListItem>
+            <ListItemIcon>
+                {icon}
+            </ListItemIcon>
+            <Link href={href} underline="hover">
+                {link}
+            </Link>
             <ListItemText primary={text} />
         </ListItem>
     )

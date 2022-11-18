@@ -19,13 +19,14 @@ import {
     ListItem,
     ListItemText,
     ListItemIcon,
-    Divider
+    Divider,
+    Link
 } from '@mui/material';
 // components
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-import { Person2, Groups, Folder, Construction, ExpandMore } from '@mui/icons-material/';
+import { Person2, Groups, Folder, Construction, ExpandMore, FileCopy } from '@mui/icons-material/';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
@@ -94,26 +95,25 @@ const TeamMemberView = () => {
     const [project, setProject] = useState([]);
     const [equipment, setEquipment] = useState([]);
     const [equipmentType, setEquipmentType] = useState([]);
+    const [report, setReport] = useState([])
 
     const forceUpdate = useForceUpdate();
 
     async function getData() {
         try {
             const { data } = await axiosInstance.get('/team/member/info')
-            
             setData(data)
             setTeam(data.team)
             setMembers(data.members);
             setProject(data.team.project)
             setEquipment(data.equipments)
             setEquipmentType(data.equipmenttypes)
+            setReport(data.team.project.reports)
         } catch (error) {
             toast.error("Get Data Failed");
             console.log(error);
         }
     }
-    
-
 
 
     useEffect(() => {
@@ -193,7 +193,7 @@ const TeamMemberView = () => {
 
     return (
         <Page title="Team Member">
-            <ToastContainer/>
+            <ToastContainer />
             <Container maxWidth="lg" >
                 <Card sx={{ top: +10, }}>
                     <CardHeader title="About Team" />
@@ -203,7 +203,7 @@ const TeamMemberView = () => {
                     </CardContent>
                 </Card>
             </Container>
-            <Container sx={{mt:2}}>
+            <Container sx={{ mt: 2 }}>
                 <Card >
                     <CardHeader title="Team Members" />
                     <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -280,6 +280,19 @@ const TeamMemberView = () => {
             </Container>
             <Container maxWidth="lg" sx={{ mt: 2 }} >
                 <Card sx={{ top: +10, }}>
+                    <CardHeader title="Reports" />
+                    
+                    <CardContent>
+                        {report.map(r => {
+                            return (
+                                <Cardinfo2 link={r.name} icon={<FileCopy />} href={r.location} />
+                            )
+                        })}
+                    </CardContent>
+                </Card>
+            </Container>
+            <Container maxWidth="lg" sx={{ mt: 2 }} >
+                <Card sx={{ top: +10, }}>
                     <CardHeader title="Equipments" />
                     <CardContent>
                         {equipment.map(({ equipment }) =>
@@ -295,7 +308,6 @@ const TeamMemberView = () => {
                         )}
                     </CardContent>
                 </Card>
-              
             </Container>
         </Page>
 
@@ -313,7 +325,20 @@ const Cardinfo = ({ icon, text }) => {
             <ListItemText primary={text} />
         </ListItem>
     )
+}
+const Cardinfo2 = ({ icon, link, href }) => {
+    return (
+        <ListItem>
+            <ListItemIcon>
+                {icon}
+            </ListItemIcon>
+            <Link href={href} underline="hover">
+                {link}
+            </Link>
 
+        </ListItem>
+    )
+    
 }
 
 export default TeamMemberView;
