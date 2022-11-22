@@ -54,7 +54,7 @@ const SetEquipment = () => {
 
     const [equipmenttype, setEquipmentType] = useState('');
     const [serialnumber, setSerialnumber] = useState('');
-    const [picture, setPicture] = useState('');
+    const [picture, setPicture] = useState('...');
     const [status, setStatus] = useState('');
     const [warehouse,setWarehouse]=useState("");
 
@@ -156,8 +156,21 @@ const SetEquipment = () => {
                         </Select>
                     </FormControl>
                     <RHFTextField name="serialnumber" label="Serial number" onChange={serialnumberChange} value={serialnumber} />
-                    <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} />
-                    <RHFTextField name="status" label="Status" onChange={statusChange} value={status} />
+                    {/* <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} /> */}
+                    {/* <RHFTextField name="status" label="Status" onChange={statusChange} value={status} /> */}
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={status}
+                            label="Status"
+                            onChange={statusChange}
+                        >
+                                <MenuItem value={"Assigned"}>{"Assigned"}</MenuItem>
+                                <MenuItem value={"Unassigned"}>{"Unssigned"}</MenuItem>
+                        </Select>
+                    </FormControl>
                     <FormControl>
                         <InputLabel id="demo-simple-select-label">Warehouse</InputLabel>
                         <Select

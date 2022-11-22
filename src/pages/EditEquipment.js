@@ -127,7 +127,6 @@ const EditEquipment = () => {
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <ToastContainer/>
             <Container>
-            <h1>EQ</h1>
                 <Grid container direction="row" spacing={2} justifyContent="center" alignItems="center">
                     <Grid item >
                         <Iconify icon="fa:user-plus" color="#983838" width={30} height={30} />

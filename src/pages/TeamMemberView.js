@@ -20,13 +20,17 @@ import {
     ListItemText,
     ListItemIcon,
     Divider,
-    Link
+    Link,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
 } from '@mui/material';
 // components
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 import { Person2, Groups, Folder, Construction, ExpandMore, FileCopy } from '@mui/icons-material/';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
@@ -279,9 +283,9 @@ const TeamMemberView = () => {
                 </Card>
             </Container>
             <Container maxWidth="lg" sx={{ mt: 2 }} >
-                <Card sx={{ top: +10, }}>
+                <Card sx={{ top: +5, }}>
                     <CardHeader title="Reports" />
-                    
+
                     <CardContent>
                         {report.map(r => {
                             return (
@@ -297,13 +301,22 @@ const TeamMemberView = () => {
                     <CardContent>
                         {equipment.map(({ equipment }) =>
                             <div>
-                                <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
-                                <Container>
-                                    <Cardinfo text={`Equipment Brand: ${equipment.equipmenttype.brand}`} icon={<ExpandMore />} />
-                                    <Cardinfo text={`Serial Number: ${equipment.serialnumber}`} icon={<ExpandMore />} />
-                                    <Cardinfo text={`Description: ${equipment.equipmenttype.description}`} icon={<ExpandMore />} />
-                                </Container>
-
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Container>
+                                            <Cardinfo text={`Equipment Brand: ${equipment.equipmenttype.brand}`} icon={<ExpandMore />} />
+                                            <Cardinfo text={`Serial Number: ${equipment.serialnumber}`} icon={<ExpandMore />} />
+                                            <Cardinfo text={`Description: ${equipment.equipmenttype.description}`} icon={<ExpandMore />} />
+                                        </Container>
+                                    </AccordionDetails>
+                                </Accordion>
                             </div>
                         )}
                     </CardContent>
@@ -338,7 +351,7 @@ const Cardinfo2 = ({ icon, link, href }) => {
 
         </ListItem>
     )
-    
+
 }
 
 export default TeamMemberView;

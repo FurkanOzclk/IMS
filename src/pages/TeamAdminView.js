@@ -22,6 +22,9 @@ import {
     Divider,
     Box,
     Link,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary
 } from '@mui/material';
 // components
 import S3FileUpload, { uploadFile } from 'react-s3';
@@ -32,6 +35,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import * as buffer from "buffer"
 
 import { Person2, Groups, Folder, Construction, Circle, ExpandMore, FileCopy } from '@mui/icons-material/';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios, { post } from 'axios';
 import { axiosInstance } from "../axios/Axios";
 import Page from '../components/Page';
@@ -226,11 +230,11 @@ const TeamAdminView = () => {
     const accessToken = localStorage.getItem("access_token");
     const urlLocal = "http://localhost:8000/api/project/report/"
 
-    
+
     const handleFile = (e) => {
         const file = e.target.files[0]
         setState(file)
-        
+
     }
 
     const handleUpload = (e) => {
@@ -252,7 +256,7 @@ const TeamAdminView = () => {
             window.location.reload();
         })
 
-        
+
     }
     return (
         <Page title="Team Admin">
@@ -289,20 +293,20 @@ const TeamAdminView = () => {
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
-                                    />
+                                />
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                         const { _id, email, fullname, role, user } = row;
                                         const isItemSelected = selected.indexOf(fullname) !== -1;
-                                        
+
                                         return (
                                             <TableRow
-                                            hover
-                                            key={_id}
-                                            tabIndex={-1}
-                                            role="checkbox"
-                                            selected={isItemSelected}
-                                            aria-checked={isItemSelected}
+                                                hover
+                                                key={_id}
+                                                tabIndex={-1}
+                                                role="checkbox"
+                                                selected={isItemSelected}
+                                                aria-checked={isItemSelected}
                                             >
 
                                                 <TableCell component="th" scope="row" >
@@ -351,7 +355,7 @@ const TeamAdminView = () => {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
+                    />
                 </Card>
             </Container>
             <Container maxWidth="lg" sx={{ mt: 2 }} >
@@ -369,8 +373,8 @@ const TeamAdminView = () => {
                         {report.map(r => {
                             return (
                                 <Cardinfo2 link={r.name} icon={<FileCopy />} href={r.location} reportId={project._id} repLocation={r.location} />
-                                )
-                            })}
+                            )
+                        })}
                     </CardContent>
                 </Card>
             </Container>
@@ -380,12 +384,23 @@ const TeamAdminView = () => {
                     <CardContent>
                         {equipment.map(({ equipment }) =>
                             <div>
-                                <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
-                                <Container>
-                                    <Cardinfo text={`Equipment Brand: ${equipment.equipmenttype.brand}`} icon={<ExpandMore />} />
-                                    <Cardinfo text={`Serial Number: ${equipment.serialnumber}`} icon={<ExpandMore />} />
-                                    <Cardinfo text={`Description: ${equipment.equipmenttype.description}`} icon={<ExpandMore />} />
-                                </Container>
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Container>
+                                            <Cardinfo text={`Equipment Brand: ${equipment.equipmenttype.brand}`} icon={<ExpandMore />} />
+                                            <Cardinfo text={`Serial Number: ${equipment.serialnumber}`} icon={<ExpandMore />} />
+                                            <Cardinfo text={`Description: ${equipment.equipmenttype.description}`} icon={<ExpandMore />} />
+                                        </Container>
+
+                                    </AccordionDetails>
+                                </Accordion>
 
                             </div>
                         )}
@@ -394,9 +409,9 @@ const TeamAdminView = () => {
             </Container>
         </Page>
 
-)
+    )
 
-    
+
 }
 
 
@@ -422,12 +437,12 @@ const Cardinfo2 = ({ icon, link, href, reportId, repLocation, updateGetData }) =
                 {link}
             </Link>
             <ListItem sx={{ justifyContent: 'flex-end' }}>
-                <ReportMoreMenu id={reportId} location={repLocation}  funcs={updateGetData}/>
+                <ReportMoreMenu id={reportId} location={repLocation} funcs={updateGetData} />
             </ListItem>
 
         </ListItem>
     )
-    
+
 }
 
 
