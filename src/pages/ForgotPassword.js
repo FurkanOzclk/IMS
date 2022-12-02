@@ -1,5 +1,4 @@
 // @mui
-import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Card, Container, Typography,Divider } from '@mui/material';
 // hooks
@@ -8,7 +7,7 @@ import useResponsive from '../hooks/useResponsive';
 import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
-import  PasswordForm  from '../sections/auth/password/PasswordForm';
+import  ForgotPasswordForm  from '../sections/auth/password/ForgotPasswordForm';
 
 // ----------------------------------------------------------------------
 
@@ -56,14 +55,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-
-  const location = useLocation();
-  const id = location.state;
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
+
   return (
-    <Page title="Password">
+    <Page title="Login">
       <RootStyle>
         <HeaderStyle>
           <Logo />
@@ -85,11 +82,11 @@ export default function Login() {
               KFAU Inventory Management System
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 1 }}>Enter your password below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 1 }}>Enter your email below.</Typography>
 
             <Divider sx={{ my: 3 }}/>
 
-            <PasswordForm id={id}/>
+            <ForgotPasswordForm />
 
             
           </ContentStyle>

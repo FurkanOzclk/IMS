@@ -45,7 +45,7 @@ const SetMember = () => {
     };
 
     
-    const defaultValues = {
+    const defaultValues = { 
         fullname: '',
         email: '',
         phone: '',
@@ -82,7 +82,7 @@ const SetMember = () => {
     };
     
     
-
+    
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

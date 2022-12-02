@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,16 +19,15 @@ import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hoo
 
 // ----------------------------------------------------------------------
 
-export default function PasswordForm(props) {
-
-  const location = useLocation();
-  const id = location.state.id;
+export default function PasswordFormInside() {
   const navigate = useNavigate();
 
-  const [data, setData] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
 
+  const [email, setEmail] = useState('')
+  const [oldPassword, setOldPassword] = useState('')
   const [password, setPassword] = useState('');
   const [confimPassword, setConfirmPassword] = useState('');
 
@@ -41,20 +40,31 @@ export default function PasswordForm(props) {
     setConfirmPassword(event.target.value)
   }
 
+  const changeOldPassword = event => {
+    setOldPassword(event.target.value)
+  }
+
+  const changeEmail = event => {
+    setEmail(event.target.value)
+  }
+
   // const PasswordSchema = Yup.object().shape({
   //   password: Yup.string() .min(8, "Password must contain at least 8 characters").required('Password is required'),
   //   confirmPassword: Yup.string().oneOf([Yup.ref("pass"), "Password does not match"]).required('Confirm your password')
   // });
 
-  const confirmPasswordF = () => {
-    if (password === '') {
-      toast.error("Please enter your password")
-    } else if (password !== confimPassword || confimPassword === '') {
-      toast.error("Please confirm your password")
-    } else {
-      toast.success("Password created successfully")
-    }
+const confirmPasswordF = () => {
+  if (password === '') {
+    toast.error("Please enter your password")
+  } else if (password !== confimPassword || confimPassword === '') {
+    toast.error("Please confirm your password") 
+  } else if (password === oldPassword){
+    toast.error("New password cannot be same as the old one") 
+  } else {
+    toast.success("Password created successfully")
+    navigate('/login', { replace: true });
   }
+} 
 
   const defaultValues = {
     password: '',
@@ -75,27 +85,51 @@ export default function PasswordForm(props) {
     confirmPasswordF()
     try {
       const formData = {
-        "id": props.id.id,
-        "password": password
+        "email": email,
+        "exPassword": oldPassword,
+        "newPassword": password
       }
-      const { data } = await axiosInstance.post('/password/set', formData)
-      setData(data)
-      if (password === confimPassword) {
-        navigate('/login', { replace: true });
-      } else {
-        toast.error("Please Confirm Your Password")
-      }
+      const { data } = await axiosInstance.post('/password/change', formData)   
+
 
     } catch (error) {
-      toast.error("Login Failed");
+      toast.error("Change Password Failed");
       console.log(error);
     }
+
+
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <ToastContainer />
       <Stack spacing={3}>
+
+      <RHFTextField
+          id="email"
+          name="email"
+          label="Email"
+          onChange={changeEmail}
+          value={email}
+        />  
+
+      <RHFTextField
+          id="pass"
+          name="password"
+          label="Old Password"
+          type={showPassword3 ? 'text' : 'password'}
+          onChange={changeOldPassword}
+          value={oldPassword}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword3)} edge="end">
+                  <Iconify icon={showPassword3 ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
 
         <RHFTextField
           id="pass"

@@ -40,7 +40,7 @@ export default function LoginForm() {
   };
 
   const navigatePassword = () => {
-    navigate('/password');
+    navigate('/forgotpassword');
   }
 
   const LoginSchema = Yup.object().shape({

@@ -5,7 +5,10 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
 import Login from './pages/Login';
-import Password from './pages/Password'
+import Password from './pages/Password';
+import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
+import Verify from './pages/Verify';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
@@ -150,15 +153,27 @@ export default function Router() {
       path: 'login',
       element: <Login />,
     },
+    {
+      path: 'forgotpassword',
+      element: <ForgotPassword />,
+    },
 
     {
       path: 'password',
       element: <Password />,
     },
+    {
+      path: 'changepassword',
+      element: < ChangePassword/>
+    },
 
     {
       path: 'register',
       element: <Register />,
+    },
+    {
+      path: 'verify',
+      element: <Verify />,
     },
     {
       path: '/',

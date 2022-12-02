@@ -1,5 +1,4 @@
 // @mui
-import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Card, Container, Typography,Divider } from '@mui/material';
 // hooks
@@ -8,7 +7,7 @@ import useResponsive from '../hooks/useResponsive';
 import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
-import  PasswordForm  from '../sections/auth/password/PasswordForm';
+import  PasswordFormInside  from '../sections/auth/password/PasswordFormInside';
 
 // ----------------------------------------------------------------------
 
@@ -56,14 +55,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-
-  const location = useLocation();
-  const id = location.state;
   const smUp = useResponsive('up', 'sm');
 
-  const mdUp = useResponsive('up', 'md');
+  const mdUp = useResponsive('up', 'md'); 
+
   return (
-    <Page title="Password">
+    <Page title="Change Password">
       <RootStyle>
         <HeaderStyle>
           <Logo />
@@ -89,7 +86,7 @@ export default function Login() {
 
             <Divider sx={{ my: 3 }}/>
 
-            <PasswordForm id={id}/>
+            <PasswordFormInside />
 
             
           </ContentStyle>

@@ -43,6 +43,11 @@ export default function AccountPopover() {
     navigate("/login")
   }
 
+  const toPassword =() => {
+    handleClose()
+    navigate("/changepassword")
+  }
+
   const [data, setData] = useState({});
 
     async function getData() {
@@ -116,7 +121,11 @@ export default function AccountPopover() {
           ))}
         </Stack>
 
+        <MenuItem onClick={toPassword} sx={{ m: 1 }}>
+          Change Password
+        </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
+        
 
         <MenuItem onClick={logout} sx={{ m: 1 }}>
           Logout
