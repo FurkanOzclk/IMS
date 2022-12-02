@@ -103,7 +103,6 @@ const Recycle = () => {
         try {
             const { data } = await axiosInstance.get('/recyclebin/')
             setData(data);
-            console.log(data);
         } catch (error) {
             toast.error("Get Data Failed");
             console.log(error);

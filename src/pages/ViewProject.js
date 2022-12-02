@@ -29,7 +29,6 @@ const ViewProject = () => {
         try {
             const { data } = await axiosInstance.get(`/project/${id}`);
             setData(data);
-            console.log(data);
             setProject(data.project);
             setTeam(data.teams);
             setMembers(data.members)
@@ -56,7 +55,7 @@ const ViewProject = () => {
                 >
                     <CardHeader
                         sx={{ mb: 3 }}
-                        title="Team Data Deleted"
+                        title="Team Data Deleted or Not Found"
                     />
 
                 </Card>
@@ -99,7 +98,7 @@ const ViewProject = () => {
                 >
                     <CardHeader
                         sx={{ mb: 3 }}
-                        title="Report Data Deleted"
+                        title="Report Data Deleted or Not Found"
                     />
 
                 </Card>

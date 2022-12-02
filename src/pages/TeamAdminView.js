@@ -251,8 +251,7 @@ const TeamAdminView = () => {
                 'content-type': 'multipart/form-data'
             },
             data: formData
-        }).then((res) => {
-            console.log(res.data.msg);
+        }).then(() => {
             window.location.reload();
         })
 

@@ -150,7 +150,7 @@ const Team = () => {
         // Download
         XLSX.writeFile(workBook, "TeamData.xlsx")
     }
-    console.log(teams);
+    
 
     return (
         <Page title="Team">

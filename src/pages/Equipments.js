@@ -124,7 +124,7 @@ const Equipments = () => {
             setDataType("equipments");
             setTitle("Equipment");
             setButtonTitle("New Equipment");
-            console.log(data);
+            
 
             setData(data);
         } catch (error) {

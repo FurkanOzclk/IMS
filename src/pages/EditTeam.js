@@ -25,7 +25,7 @@ const EditTeam = () => {
     const [teamName, setTeamName] = useState(location.state.teamName);
     const [data, setData] = useState([]);
 
-    console.log(location.state.teamId);
+    
     async function getData() {
         try {
             const { data } = await axiosInstance.get('/project/')
