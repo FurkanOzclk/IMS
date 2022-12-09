@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, Select, MenuItem, FormHelperText } from '@mui/material';
-
 import { LoadingButton } from '@mui/lab';
 
 import { toast, ToastContainer } from 'react-toastify';
@@ -43,6 +42,7 @@ export default function LoginForm() {
     navigate('/forgotpassword');
   }
 
+  
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -85,15 +85,10 @@ export default function LoginForm() {
         navigate('/team/teammember', { replace: true });
       }
 
-
-
     } catch (error) {
       toast.error("Login Failed");
       console.log(error);
     }
-
-
-    // navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -102,8 +97,8 @@ export default function LoginForm() {
       <Stack spacing={3}>
         <Stack direction="row" justifyContent="space-evenly">
 
-          <RHFTextField name="email" label="User Name" onChange={changeEmail} value={email} placeholder="Name.Surname" />
-          <Stack>
+          <RHFTextField name="email" label="User Email" onChange={changeEmail} value={email} placeholder="University Email" />
+          {/* <Stack>
 
             <Select
               labelId="demo-simple-select-standard-label"
@@ -117,9 +112,9 @@ export default function LoginForm() {
               <MenuItem value={"@ogr.gidatarim.edu.tr"}>@ogr.gidatarim.edu.tr</MenuItem>
 
             </Select>
-          </Stack>
+          </Stack> */}
         </Stack>
-        <FormHelperText>* Students have to select "@ogr.gidatarim.edu.tr."</FormHelperText>
+        {/* <FormHelperText>* Students have to select "@ogr.gidatarim.edu.tr."</FormHelperText> */}
 
         <RHFTextField
           name="password"
@@ -127,20 +122,21 @@ export default function LoginForm() {
           type={showPassword ? 'text' : 'password'}
           onChange={changePassword}
           value={password}
+          placeholder="Password"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                   <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
-              </InputAdornment> 
+              </InputAdornment>
             ),
           }}
         />
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 2 }}>
-        <Link variant="subtitle2" underline="hover" onClick={navigatePassword} sx={{cursor:"pointer"}}>
+        <Link variant="subtitle2" underline="hover" onClick={navigatePassword} sx={{ cursor: "pointer" }}>
           Forgot password?
         </Link>
       </Stack>
@@ -148,6 +144,8 @@ export default function LoginForm() {
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ bgcolor: "#983838" }}>
         Login
       </LoadingButton>
+
+      
     </FormProvider>
   );
 }

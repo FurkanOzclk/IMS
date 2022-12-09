@@ -1,13 +1,13 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Container, Typography,Divider } from '@mui/material';
+import { Card, Container, Typography, Divider } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
 import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
-import { LoginForm } from '../sections/auth/login';
+import { LoginForm, Footer } from '../sections/auth/login';
 
 // ----------------------------------------------------------------------
 
@@ -65,32 +65,32 @@ export default function Login() {
         <HeaderStyle>
           <Logo />
 
-          
+
         </HeaderStyle>
 
         {mdUp && (
           <SectionStyle>
-            
+
             <img src="/static/illustrations/illustration_login.png" alt="login" />
+            <Container>
+              <Footer />
+            </Container>
           </SectionStyle>
         )}
 
         <Container maxWidth="sm">
           <ContentStyle>
-          
-
-
             <Typography variant="h4" gutterBottom>
               KFAU Inventory Management System
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 1 }}>Enter your details below.</Typography>
 
-            <Divider sx={{ my: 3 }}/>
+            <Divider sx={{ my: 3 }} />
 
             <LoginForm />
 
-            
+
           </ContentStyle>
         </Container>
       </RootStyle>

@@ -57,11 +57,11 @@ const navConfig = [
     path: '/dashboard/recycle',
     icon: getIcon('mdi:recycle'),
   },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon('eva:alert-triangle-fill'),
-  },
+  // {
+  //   title: 'Not found',
+  //   path: '/404',
+  //   icon: getIcon('eva:alert-triangle-fill'),
+  // },
 ];
 
 export default navConfig;

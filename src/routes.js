@@ -19,6 +19,7 @@ import SetUser from './pages/SetUser';
 import EditUser from './pages/EditUser';
 
 import Profile from './pages/Profile';
+import AboutUs from './pages/AboutUs';
 
 import Project from './pages/Project';
 import SetProject from './pages/SetProject';
@@ -157,7 +158,6 @@ export default function Router() {
       path: 'forgotpassword',
       element: <ForgotPassword />,
     },
-
     {
       path: 'password',
       element: <Password />,
@@ -166,7 +166,6 @@ export default function Router() {
       path: 'changepassword',
       element: < ChangePassword/>
     },
-
     {
       path: 'register',
       element: <Register />,
@@ -174,6 +173,10 @@ export default function Router() {
     {
       path: 'verify',
       element: <Verify />,
+    },
+    {
+      path: 'aboutus',
+      element: <AboutUs />,
     },
     {
       path: '/',
