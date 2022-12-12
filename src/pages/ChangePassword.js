@@ -82,7 +82,7 @@ export default function Login() {
               KFAU Inventory Management System
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 1 }}>Enter your password below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 1 }}>Enter your details below.</Typography>
 
             <Divider sx={{ my: 3 }}/>
 

@@ -122,7 +122,7 @@ const ViewEquipment = () => {
             const { data } = await axiosInstance.put(`/equipment/unassign/${id}`, formData)
             unassignModalClose();
 
-            toast.error("Unassign Date Saved");
+            toast.success("Unassign Date Saved");
         } catch (error) {
             toast.error("Edit Unassign Date Failed");
             console.log(error);

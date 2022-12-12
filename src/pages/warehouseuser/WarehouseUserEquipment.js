@@ -19,8 +19,9 @@ import {
     TablePagination,
 } from '@mui/material';
 // components
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import * as XLSX from 'xlsx/xlsx.mjs';
 import Page from '../../components/Page';
 import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
@@ -270,12 +271,55 @@ const WarehouseUserEquipment = () => {
         func: getDataFromEquipmentTeams
     }
 
+    const exportExcel = () => {
+        if (dataType === "equipments") {
+            const _equipments = data;
+            _equipments.forEach(data => {
+                data.equipmenttype = `${data.equipmenttype.name} - ${data.equipmenttype.brand}`
+            });
+            const _warehouse = data;
+            _warehouse.forEach(data => {
+                data.warehouse = data.warehouse.name
+            })
+
+            const workSheet = XLSX.utils.json_to_sheet(data)
+            const workBook = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(workBook, workSheet, "equipments")
+            // Download
+            XLSX.writeFile(workBook, "EquipmentData.xlsx")
+        }
+        if (dataType === "equipmentType") {
+            const workSheet = XLSX.utils.json_to_sheet(data)
+            const workBook = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(workBook, workSheet, "equipmentTypes")
+            // Download
+            XLSX.writeFile(workBook, "EquipmentTypesData.xlsx")
+        }
+        if (dataType === "equipmentTeam") {
+            const _equipment = data;
+            _equipment.forEach(data => {
+                data.equipment = data.equipment.serialnumber
+            })
+            const _team = data;
+            _team.forEach(data => {
+                data.team = data.team.name;
+            })
+
+            const workSheet = XLSX.utils.json_to_sheet(data)
+            const workBook = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(workBook, workSheet, "equipmentTypes")
+            // Download
+            XLSX.writeFile(workBook, "EquipmentTeamsData.xlsx")
+        }
+
+    }
+
     const TableReturner = () => {
         if (dataType === "equipments") {
             return (
 
                 <Table >
-                    
+
                     <UserListHead
                         order={order}
                         orderBy={orderBy}
@@ -478,7 +522,7 @@ const WarehouseUserEquipment = () => {
 
     return (
         <Page title="Equipments" id="pagem">
-            <ToastContainer/>
+            <ToastContainer />
             <Container>
                 <Grid container spacing={3} mb={4}>
 
@@ -507,8 +551,13 @@ const WarehouseUserEquipment = () => {
                     </Button>
                 </Stack>
                 <Card>
-                    <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+                    <Stack direction="row" alignItems="center" justifyContent="space-between" m={1}>
 
+                        <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+                        <Button variant="contained" startIcon={<Iconify icon="bi:filetype-xlsx" />} onClick={exportExcel}>
+                            Export Excel
+                        </Button>
+                    </Stack>
                     <Scrollbar>
                         <TableContainer ref={refex} sx={{ minWidth: 800 }}>
                             <TableReturner />

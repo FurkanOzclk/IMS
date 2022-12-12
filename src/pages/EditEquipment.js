@@ -80,7 +80,7 @@ const EditEquipment = () => {
     
     const defaultValues = {
         equipmenttype: '',
-        picture: '',
+        picture: 'none.png',
         status: '',
         serialnumber: '',
         warehouse:""
@@ -155,8 +155,21 @@ const EditEquipment = () => {
                         </Select>
                     </FormControl>
                     <RHFTextField name="serialnumber" label="Serial number" onChange={serialnumberChange} value={serialnumber} />
-                    <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} />
-                    <RHFTextField name="status" label="Status" onChange={statusChange} value={status} />
+                    {/* <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} /> */}
+                    {/* <RHFTextField name="status" label="Status" onChange={statusChange} value={status} /> */}
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={status}
+                            label="Equipment Type"
+                            onChange={statusChange}
+                        >
+                                <MenuItem value="Assigned">Assigned</MenuItem>     
+                                <MenuItem value="Unassigned">Unassigned</MenuItem>                            
+                        </Select>
+                    </FormControl>
                     <FormControl>
                         <InputLabel id="demo-simple-select-label">Warehouse</InputLabel>
                         <Select

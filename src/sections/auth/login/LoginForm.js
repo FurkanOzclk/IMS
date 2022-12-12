@@ -67,7 +67,7 @@ export default function LoginForm() {
   const onSubmit = async () => {
     try {
       const formData = {
-        "email": `${email + mailext}`,
+        "email": `${email}`,
         "password": password
       }
       const { data } = await axiosInstance.post('/user/login', formData)

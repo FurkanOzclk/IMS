@@ -140,7 +140,6 @@ const Equipments = () => {
             setDataType("equipmentType");
             setTitle("Equipment Type");
             setButtonTitle("New Equipment Type");
-            console.log(data);
 
             setData(data);
         } catch (error) {
@@ -155,7 +154,6 @@ const Equipments = () => {
             setDataType("equipmentTeam");
             setTitle("Equipment Team");
             setButtonTitle("Assign")
-            console.log(data);
 
             setData(data);
         } catch (error) {

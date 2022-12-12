@@ -24,7 +24,6 @@ const SetEquipmentTeam = () => {
         try {
             const { data } = await axiosInstance.get('/equipment')
             
-
             setEqData(data);
         } catch (error) {
             toast.error("Get Data Failed");
@@ -130,7 +129,7 @@ const SetEquipmentTeam = () => {
                             onChange={equipmentChange}
                         >
                             {eqData.map(eq =>
-                                <MenuItem value={eq._id}>{`${eq.equipmenttype.brand} - ${eq.equipmenttype.name}`}</MenuItem>
+                                <MenuItem value={eq._id}>{`S.No: ${eq.serialnumber} - ${eq.equipmenttype.name}`}</MenuItem>
                             )}
 
                         </Select>

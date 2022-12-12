@@ -207,7 +207,7 @@ const TeamMemberView = () => {
                     </CardContent>
                 </Card>
             </Container>
-            <Container sx={{ mt: 2 }}>
+            <Container sx={{ mt: 5 }}>
                 <Card >
                     <CardHeader title="Team Members" />
                     <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -282,8 +282,8 @@ const TeamMemberView = () => {
                     />
                 </Card>
             </Container>
-            <Container maxWidth="lg" sx={{ mt: 2 }} >
-                <Card sx={{ top: +5, }}>
+            <Container maxWidth="lg" sx={{ mt: 4 }} >
+                <Card sx={{ top: +4, }}>
                     <CardHeader title="Reports" />
 
                     <CardContent>
@@ -295,8 +295,8 @@ const TeamMemberView = () => {
                     </CardContent>
                 </Card>
             </Container>
-            <Container maxWidth="lg" sx={{ mt: 2 }} >
-                <Card sx={{ top: +10, }}>
+            <Container maxWidth="lg" sx={{ mt: 4 }} >
+                <Card sx={{ top: +4, }}>
                     <CardHeader title="Equipments" />
                     <CardContent>
                         {equipment.map(({ equipment }) =>
@@ -306,6 +306,7 @@ const TeamMemberView = () => {
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1a-content"
                                         id="panel1a-header"
+                                        sx={{mb:-2}}
                                     >
                                         <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
                                     </AccordionSummary>

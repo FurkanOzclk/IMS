@@ -68,7 +68,7 @@ const SetWarehouse = () => {
                 "user": warehouseUser,
             }
             const { data } = await axiosInstance.post('/warehouse/', formData)
-            toast.error("Warehouse Saved");
+            toast.success("Warehouse Saved");
         } catch (error) {
             toast.error("Add Warehouse Failed");
             console.log(error);

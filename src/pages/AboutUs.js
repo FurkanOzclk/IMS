@@ -24,12 +24,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function AboutUs() {
     return (
         <Page title="AboutUs">
-                <Typography>About us</Typography>
             <ContentStyle>
-                <Stack direction="row" spacing={3} >
-                    <CardReturner1 />
-                    <CardReturner2 />
-                    <CardReturner3 />
+                <Stack direction="row" spacing={3} alignItems="center" justifyContent="center" >
+                    <Stack>
+                        <CardReturner1 />
+                    </Stack>
+                    <Stack>
+                        <CardReturner2 />
+                    </Stack><Stack>
+                        <CardReturner3 />
+                    </Stack>
                 </Stack>
             </ContentStyle>
         </Page>
@@ -55,7 +59,7 @@ const CardReturner1 = () => {
             </CardContent>
             <CardActions>
                 <Button size="small" href="https://linkedin.com/in/furkan-%C3%B6z%C3%A7elik-bb8987204">LinkedIn</Button>
-                
+
             </CardActions>
         </Card>
     )

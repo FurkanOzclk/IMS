@@ -269,7 +269,7 @@ const TeamAdminView = () => {
                     </CardContent>
                 </Card>
             </Container>
-            <Container sx={{ mt: 2 }}>
+            <Container sx={{ mt: 4 }}>
 
                 <Card>
                     <Stack direction="row" alignItems="baseline" justifyContent="space-between" m={2}>
@@ -362,7 +362,7 @@ const TeamAdminView = () => {
                     <Stack direction="row" alignItems="baseline" justifyContent="space-between" mr={2}>
                         <CardHeader title="Reports" />
                         <Button variant="contained">
-                            <input type="file" name='file' accept='application/pdf' onChange={(e) => handleFile(e)} />
+                            <input type="file" name='file' accept='application/pdf' onChange={(e) => handleFile(e)} lang="en" />
                         </Button>
                         <Button variant="contained" onClick={(e) => handleUpload(e)} disabled={click}>
                             Upload
@@ -377,7 +377,7 @@ const TeamAdminView = () => {
                     </CardContent>
                 </Card>
             </Container>
-            <Container sx={{ mt: 2 }}>
+            <Container sx={{ mt: 4 }}>
                 <Card sx={{ top: +10, }}>
                     <CardHeader title="Equipment Details" />
                     <CardContent>
@@ -388,6 +388,7 @@ const TeamAdminView = () => {
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1a-content"
                                         id="panel1a-header"
+                                        sx={{mb: -2}}
                                     >
                                         <Cardinfo text={`Equipment : ${equipment.equipmenttype.name}`} icon={<Construction />} />
                                     </AccordionSummary>

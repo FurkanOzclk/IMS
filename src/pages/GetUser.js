@@ -88,8 +88,6 @@ const GetUser = () => {
     async function getData() {
         try {
             const { data } = await axiosInstance.get('/user/')
-
-
             setUsers(data);
         } catch (error) {
             toast.error("Get Data Failed");
@@ -170,7 +168,7 @@ const GetUser = () => {
 
     const exportExcel = () => {
         const workSheet = XLSX.utils.json_to_sheet(users)
-        const workBook = XLSX.utils.book_new(users)
+        const workBook = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(workBook, workSheet, "users")
         // Download
         XLSX.writeFile(workBook, "UserData.xlsx")

@@ -1,12 +1,12 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-import { useNavigate, useLocation,useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 // @mui
-import { Stack,Container, Grid, Typography, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import { Stack, Container, Grid, Typography, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { axiosInstance } from "../../axios/Axios";
 // components
@@ -16,9 +16,9 @@ import { FormProvider, RHFTextField } from "../../components/hook-form"
 
 
 const WarehouseUserSetEquipment = () => {
-    const [data,setData]=useState([]);
-    const [warehousedata,setWarehouseData]=useState([]);
-    
+    const [data, setData] = useState([]);
+    const [warehousedata, setWarehouseData] = useState([]);
+
     const navigate = useNavigate();
     async function getDataEq() {
         try {
@@ -32,12 +32,12 @@ const WarehouseUserSetEquipment = () => {
         }
     }
 
-    
+
 
 
     useEffect(() => {
         getDataEq()
-        
+
     }, [])
 
 
@@ -45,7 +45,7 @@ const WarehouseUserSetEquipment = () => {
     const [serialnumber, setSerialnumber] = useState('');
     const [picture, setPicture] = useState('');
     const [status, setStatus] = useState('');
-    
+
 
     const equipmentTypeChange = event => {
         setEquipmentType(event.target.value);
@@ -66,10 +66,10 @@ const WarehouseUserSetEquipment = () => {
 
     const defaultValues = {
         equipmenttype: '',
-        picture: '',
+        picture: 'none.png',
         status: '',
         serialnumber: '',
-        
+
     };
 
     const methods = useForm({
@@ -82,8 +82,8 @@ const WarehouseUserSetEquipment = () => {
     } = methods;
 
 
-    
-    
+
+
 
     const onSubmit = async () => {
         try {
@@ -92,10 +92,10 @@ const WarehouseUserSetEquipment = () => {
                 serialnumber,
                 picture,
                 status,
-                
+
             }
             const { data } = await axiosInstance.post('/warehouseuser/equipment/', formData)
-            
+
             toast.success("Equipment Saved");
         } catch (error) {
             toast.error("Add Equipment Failed");
@@ -109,7 +109,7 @@ const WarehouseUserSetEquipment = () => {
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-            <ToastContainer/>
+            <ToastContainer />
             <Container>
                 <Grid container direction="row" spacing={2} justifyContent="center" alignItems="center">
                     <Grid item >
@@ -123,8 +123,6 @@ const WarehouseUserSetEquipment = () => {
                 </Grid>
                 <Stack spacing={3} sx={{ my: 2 }}>
                     {/* <RHFTextField name="equipmenttype" label="Equipment Type" onChange={equipmentTypeChange} value={equipmenttype} /> */}
-                    
-
 
                     <FormControl>
                         <InputLabel id="demo-simple-select-label">Equipment Type</InputLabel>
@@ -135,16 +133,30 @@ const WarehouseUserSetEquipment = () => {
                             label="Equipment Type"
                             onChange={equipmentTypeChange}
                         >
-                            {data.map(eq=>
+                            {data.map(eq =>
                                 <MenuItem value={eq._id}>{`${eq.brand} - ${eq.name}`}</MenuItem>
-                                )}
-                            
+                            )}
+
                         </Select>
                     </FormControl>
                     <RHFTextField name="serialnumber" label="Serial number" onChange={serialnumberChange} value={serialnumber} />
-                    <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} />
-                    <RHFTextField name="status" label="Status" onChange={statusChange} value={status} />
-                    
+                    {/* <RHFTextField name="picture" label="Picture" onChange={pictureChange} value={picture} /> */}
+                    {/* <RHFTextField name="status" label="Status" onChange={statusChange} value={status} /> */}
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-helper"
+                            value={status}
+                            label="Status"
+                            onChange={statusChange}
+                        >
+                            <MenuItem value={"Assigned"}>Assigned</MenuItem>
+                            <MenuItem value={"Unassigned"}>Unassigned</MenuItem>
+                        </Select>
+                    </FormControl>
+
+
                     {/* <RHFTextField name="warehouse" label="Warehouse" onChange={warehouseChange} value={warehouse} /> */}
 
 

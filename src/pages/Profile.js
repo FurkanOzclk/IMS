@@ -35,7 +35,7 @@ export default function Profile() {
             <Box
 
                 sx={{
-                    height: 300,
+                    height: 1,
                     width: 1,
                 }}>
                 <Box
@@ -60,7 +60,7 @@ export default function Profile() {
                 {/* <br/> */}
                 <Container maxWidth="md" >
                     <Card
-                        sx={{ top: -50, width: 1, }}
+                        sx={{ top: -70, width: 1, }}
                     >
                         <CardHeader
                             title="About Me"

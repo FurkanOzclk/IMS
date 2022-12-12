@@ -73,13 +73,14 @@ const Project = () => {
     const [data, setData] = useState({});
     const [projects, setProjects] = useState([1, 2, 3, 4, 5]);
 
-    
+
 
     async function getData() {
         try {
             const { data } = await axiosInstance.get('/project/')
             setData(data);
             setProjects(data.projects);
+    
         } catch (error) {
             toast.error("Get Data Failed");
             console.log(error);
@@ -137,6 +138,11 @@ const Project = () => {
     }
 
     const exportExcel = () => {
+        const _project = projects;
+            _project.forEach(p => {
+                p.reports = p.reports.length
+            })
+
         const workSheet = XLSX.utils.json_to_sheet(projects)
         const workBook = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(workBook, workSheet, "projects")
@@ -178,8 +184,8 @@ const Project = () => {
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                         const { _id, name, startDate, endDate } = row;
-                                    
-                                        
+
+
 
                                         return (
                                             <TableRow

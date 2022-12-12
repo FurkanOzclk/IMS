@@ -123,7 +123,7 @@ const confirmPasswordF = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword3)} edge="end">
+                <IconButton onClick={() => setShowPassword3(!showPassword3)} edge="end">
                   <Iconify icon={showPassword3 ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
